@@ -7,7 +7,7 @@ import os
 import json
 
 
-config = dict()
+config = ""
 
 
 def clear_terminal():
@@ -17,18 +17,31 @@ def clear_terminal():
 
 
 def load_config():
-	# reads the JSON config file
-	# saves the data in the config dictionary
+	global config
+	with open("config.json", "r") as read_file:
+		config = json.load(read_file)
 	return None
 
 def update_config(field, value):
-	# loads the json config file, changes the apropriate field, saves the file, load_config()
+	global config
+	config[field] = value
+
+	with open("config.json", "w") as write_file:
+		json.dump(config, write_file)
+
+	return None
+
+def new_config():
+	with open("config.json", "w") as write_file:
+		json.dump({"dguser" : "", "dgpass" : "", "dgpassfile" : "", "endtime" : ""}, write_file)
 	return None
 
 
 def main(args):
 	"""Parsing command line arguments"""
 	if args[1] == "config":
+		if args[2] == "--restore-defaults":
+			new_config()
 		if args[2] == "--endtime":
 			update_config("endtime", args[3])
 		if args[2] == "--dguser":
