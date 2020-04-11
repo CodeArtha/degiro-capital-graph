@@ -5,9 +5,29 @@ import keyring
 import sys
 import os
 import json
+from tinydb import TinyDB
+from tinydb import Query
+import time
+
+# columns = date | portfolio value | delta
+# DATABASE.insert({'date': None,
+#                  'value': None,
+#                  'delta': None})
+DATABASE = TinyDB("history.json")
 
 
 config = ""
+
+
+def fetch():
+	# check no entry yet for today
+	today = time.asctime()
+	DATABASE.
+	# check time > marketclose + 20 min
+	# connect to degiro website
+	# grabs the portfolio value
+	# calculates delta with yesterday
+	# saves: date, portfolio value, delta to database
 
 
 def clear_terminal():
@@ -33,7 +53,7 @@ def update_config(field, value):
 
 def new_config():
 	with open("config.json", "w") as write_file:
-		json.dump({"dguser" : "", "dgpass" : "", "dgpassfile" : "", "endtime" : ""}, write_file)
+		json.dump({"dguser" : "", "dgpass" : "", "dgpassfile" : "", "marketclose" : ""}, write_file)
 	return None
 
 
@@ -43,7 +63,7 @@ def main(args):
 		if args[2] == "--restore-defaults":
 			new_config()
 		if args[2] == "--endtime":
-			update_config("endtime", args[3])
+			update_config("marketclose", args[3])
 		if args[2] == "--dguser":
 			update_config("dguser", args[3])
 		if args[2] == "--dgpass":
