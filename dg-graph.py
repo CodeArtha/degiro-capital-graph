@@ -5,9 +5,29 @@ import keyring
 import sys
 import os
 import json
+from tinydb import TinyDB
+from tinydb import Query
+import time
+
+# columns = date | portfolio value | delta
+# DATABASE.insert({'date': None,
+#                  'value': None,
+#                  'delta': None})
+DATABASE = TinyDB("history.json")
 
 
-config = dict()
+config = ""
+
+
+def fetch():
+	# check no entry yet for today
+	today = time.asctime()
+	DATABASE.
+	# check time > marketclose + 20 min
+	# connect to degiro website
+	# grabs the portfolio value
+	# calculates delta with yesterday
+	# saves: date, portfolio value, delta to database
 
 
 def clear_terminal():
@@ -17,20 +37,33 @@ def clear_terminal():
 
 
 def load_config():
-	# reads the JSON config file
-	# saves the data in the config dictionary
+	global config
+	with open("config.json", "r") as read_file:
+		config = json.load(read_file)
 	return None
 
 def update_config(field, value):
-	# loads the json config file, changes the apropriate field, saves the file, load_config()
+	global config
+	config[field] = value
+
+	with open("config.json", "w") as write_file:
+		json.dump(config, write_file)
+
+	return None
+
+def new_config():
+	with open("config.json", "w") as write_file:
+		json.dump({"dguser" : "", "dgpass" : "", "dgpassfile" : "", "marketclose" : ""}, write_file)
 	return None
 
 
 def main(args):
 	"""Parsing command line arguments"""
 	if args[1] == "config":
+		if args[2] == "--restore-defaults":
+			new_config()
 		if args[2] == "--endtime":
-			update_config("endtime", args[3])
+			update_config("marketclose", args[3])
 		if args[2] == "--dguser":
 			update_config("dguser", args[3])
 		if args[2] == "--dgpass":
