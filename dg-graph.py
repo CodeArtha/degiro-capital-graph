@@ -33,7 +33,7 @@ def fetch():
 def clear_terminal():
 	"""Clears the terminal, OS independant"""
     os.system('cls' if os.name == 'nt' else 'clear')
-	print('trol')
+	print('Salut barbie')
     return None
 
 
