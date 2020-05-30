@@ -39,6 +39,7 @@ def clear_terminal():
 
 def load_config():
 	global config
+	print('hello world sucks')
 	with open("config.json", "r") as read_file:
 		config = json.load(read_file)
 	return None
