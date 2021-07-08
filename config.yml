@@ -1,0 +1,8 @@
+dguser: username
+auth_method: keyring # password, keyfile, keyring
+isSetKeyring: 1
+dgpass: password
+dgpassfile: c:\path\to\file.txt
+endtime: 
+    hours: 23
+    minutes: 00
